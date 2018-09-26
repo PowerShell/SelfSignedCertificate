@@ -97,10 +97,10 @@ PrivateData = @{
         # Tags = @()
 
         # A URL to the license for this module.
-        # LicenseUri = ''
+        LicenseUri = 'https://github.com/rjmholt/SelfSignedCertificate/blob/master/LICENSE.txt'
 
         # A URL to the main website for this project.
-        # ProjectUri = ''
+        ProjectUri = 'https://github.com/rjmholt/SelfSignedCertificate'
 
         # A URL to an icon representing this module.
         # IconUri = ''
