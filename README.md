@@ -6,6 +6,7 @@ Table of Contents:
 - [Overview](#overview)
 - [Example Usage](#example-usage)
 - [Suggested Improvements](#suggested-improvements)
+- [License](#license)
 
 ### Disclaimer
 This module is not officially supported.
