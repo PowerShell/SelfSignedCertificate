@@ -13,8 +13,8 @@ $script:DefaultCertificateFileName = 'certificate'
 $script:DefaultKeyUsage = [System.Security.Cryptography.X509Certificates.X509KeyUsageFlags]::None
 # Default certificate subject Common Name
 $script:DefaultCommonName = 'localhost'
-# Default certificate friendly name
-$script:DefaultFriendlyName = 'Test Certificate'
+
+$script:IsUnix = $IsLinux -or $IsMacOS
 
 # List of certificate key usages supported
 enum EnhancedKeyUsage
@@ -267,7 +267,11 @@ class SelfSignedCertificate
 
         $cert = $certRequest.CreateSelfSigned($this.NotBefore, $this.NotAfter)
 
-        $cert.FriendlyName = $this.FriendlyName
+        # FriendlyName is not supported on UNIX platforms
+        if (-not $script:IsUnix)
+        {
+            $cert.FriendlyName = $this.FriendlyName
+        }
 
         return $cert
     }
@@ -390,7 +394,7 @@ function New-SelfSignedCertificate
         [Parameter()]
         [ValidateNotNullOrEmpty()]
         [string]
-        $FriendlyName = $script:DefaultFriendlyName,
+        $FriendlyName,
 
         [Parameter()]
         [System.Security.Cryptography.X509Certificates.X509ContentType]
