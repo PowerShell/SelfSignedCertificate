@@ -101,10 +101,10 @@ full distinguished names as well as a few other options:
     StartDate = [datetime]::Now
     Duration = [timespan]::FromDays(365)
     Passphrase = $password
-    CertificateFormat = [System.Security.Cryptography.X509Certificates.X509ContentType]::Pfx
+    CertificateFormat = 'Pfx' # Values from [System.Security.Cryptography.X509Certificates.X509ContentType]
     KeyLength = 4096
     ForCertificateAuthority = $true
-    KeyUsage = [System.Security.Cryptography.X509Certificates.X509KeyUsageFlags]::DigitalSignature,[System.Security.Cryptography.X509Certificates.X509KeyUsageFlags]::KeyEncipherment
+    KeyUsage = 'DigitalSignature','KeyEncipherment' # Values from [System.Security.Cryptography.X509Certificates.X509KeyUsageFlags]
     EnhancedKeyUsage = 'ServerAuthentication','ClientAuthentication'
 }
 > New-SelfSignedCertificate @certificateParameters -Force
