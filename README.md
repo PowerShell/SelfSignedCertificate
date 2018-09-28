@@ -22,7 +22,7 @@ Overview
 ---
 
 This module is designed to be a convenient, cross-platform way
-to generate self-signed certificates in PowerShell Core.
+to generate self-signed certificates in both PowerShell Core and Windows PowerShell 5.1.
 
 Since .NET Core already embeds its own cross-platform cryptography/certificate API,
 this module is a native PowerShell script module, with no binary dependencies.
