@@ -11,10 +11,10 @@
 RootModule = 'SelfSignedCertificate.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.0.2'
+ModuleVersion = '0.0.3'
 
 # Supported PSEditions
-CompatiblePSEditions = 'Core'
+CompatiblePSEditions = 'Core', 'Desktop'
 
 # ID used to uniquely identify this module
 GUID = '634218b8-3334-4f10-ba89-2b79b0fd9fc4'
@@ -32,7 +32,7 @@ Copyright = '© Robert Holt'
 Description = 'Provides functionality for creating, processing and manipulating self-signed certificates in PowerShell'
 
 # Minimum version of the PowerShell engine required by this module
-PowerShellVersion = '6.1'
+PowerShellVersion = '5.1'
 
 # Name of the PowerShell host required by this module
 # PowerShellHostName = ''
