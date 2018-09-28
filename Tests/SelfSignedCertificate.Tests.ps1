@@ -12,7 +12,7 @@ function Get-MillisecondTruncatedTime
 
 Describe "Generates a simple self signed certificate" {
     BeforeAll {
-        Import-Module (Join-Path $PSScriptRoot '..' 'SelfSignedCertificate')
+        Import-Module ([System.IO.Path]::Combine($PSScriptRoot, '..', 'SelfSignedCertificate'))
 
         $certSubject = @{
             CommonName = 'donotuse.example.info'
@@ -60,8 +60,6 @@ Describe "Generates a simple self signed certificate" {
         $sha256RsaOid = "1.2.840.113549.1.1.11"
         $loadedCert.SignatureAlgorithm.Value | Should -Be $sha256RsaOid
         $loadedCert.PublicKey.Key.KeySize | Should -Be $certParameters.KeyLength
-        $loadedCert.PublicKey.Key.KeyExchangeAlgorithm | Should -Be 'RSA'
-        $loadedCert.PublicKey.Key.SignatureAlgorithm | Should -Be 'RSA'
     }
 
     It "Has the expected start date" {
