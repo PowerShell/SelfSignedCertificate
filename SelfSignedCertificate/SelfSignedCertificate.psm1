@@ -1,6 +1,12 @@
 # Copyright (c) Robert Holt. All rights reserved.
 # Licensed under the MIT License.
 
+Write-Warning @'
+This module is use-at-your-own-risk.
+It exists to test PowerShell Core builds and is not supported by Microsoft.
+Please report any issues at https://github.com/rjmholt/SelfSignedCertificate.
+'@
+
 # The default length of a certificate in days
 $script:DefaultCertDurationDays = 365
 # Default RSA key length

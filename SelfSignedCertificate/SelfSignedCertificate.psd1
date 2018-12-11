@@ -11,7 +11,7 @@
 RootModule = 'SelfSignedCertificate.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.0.3'
+ModuleVersion = '0.0.4'
 
 # Supported PSEditions
 CompatiblePSEditions = 'Core', 'Desktop'
@@ -29,7 +29,15 @@ CompanyName = 'Microsoft Corporation'
 Copyright = '© Robert Holt'
 
 # Description of the functionality provided by this module
-Description = 'Provides functionality for creating, processing and manipulating self-signed certificates in PowerShell'
+Description = @'
+WARNING: This module is use-at-your-own-risk - it exists to test web cmdlets in PowerShell Core with. It is unsupported by Microsoft.
+
+This module provides functionality for creating, processing and manipulating self-signed certificates in PowerShell.
+
+It aims to be broadly useful and cross-platform, but is not intended for production use.
+
+If you experience any issues with or have feature requests for this module, please open an issue at https://github.com/rjmholt/SelfSignedCertificate.
+'@
 
 # Minimum version of the PowerShell engine required by this module
 PowerShellVersion = '5.1'
