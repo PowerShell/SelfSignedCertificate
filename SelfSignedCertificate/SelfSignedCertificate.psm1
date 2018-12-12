@@ -708,6 +708,9 @@ Passes through the README as a string object into the pipeline.
 .PARAMETER WriteToHost
 Writes the text of the README directly into the host.
 
+.PARAMETER NoVSCode
+Do not attempt to open the README in the current VSCode session.
+
 .PARAMETER NoMarkdown
 Do not attempt to render the README as markdown in the console.
 
