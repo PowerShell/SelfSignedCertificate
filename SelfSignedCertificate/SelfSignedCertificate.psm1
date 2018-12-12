@@ -1,6 +1,7 @@
 # Copyright (c) Robert Holt. All rights reserved.
 # Licensed under the MIT License.
 
+# Warn about support
 Write-Warning @'
 This module is use-at-your-own-risk.
 It exists to test PowerShell Core builds and is not supported by Microsoft.
@@ -688,4 +689,145 @@ function New-AuthorityKeyIdentifier
         $akiOid,
         $akiRawData,
         $Critical)
+}
+
+<#
+.SYNOPSIS
+Displays the README for this module.
+
+.DESCRIPTION
+Retrieves the README for this module from the internet
+and displays in the format determined by parameters.
+
+.PARAMETER Online
+Opens the README page in the browser.
+
+.PARAMETER PassThru
+Passes through the README as a string object into the pipeline.
+
+.PARAMETER WriteToHost
+Writes the text of the README directly into the host.
+
+.PARAMETER NoMarkdown
+Do not attempt to render the README as markdown in the console.
+
+.PARAMETER NoEditor
+Do not attempt to create the README as a text file and open it in an editor.
+
+.PARAMETER NoMore
+Do not attempt to see the text file with more or less.
+
+.EXAMPLE
+# Displays the README in the console
+Open-SelfSignedCertificateReadMe
+
+.EXAMPLE
+# Opens the README page in the browser
+Open-SelfSignedCertificateReadMe -Online
+
+.EXAMPLE
+# Displays the README in the best way possible
+# without rendering markdown or using a text file
+Open-SelfSignedCertificateReadMe -NoMarkdown -NoTextFile
+
+.NOTES
+General notes
+#>
+
+function Open-SelfSignedCertificateReadMe
+{
+    [CmdletBinding(DefaultParameterSetName='OptoutSwitches')]
+    param(
+        [Parameter(ParameterSetName='Online')]
+        [switch]
+        $Online,
+
+        [Parameter(ParameterSetName='PassThru')]
+        [switch]
+        $PassThru,
+
+        [Parameter(ParameterSetName='WriteHost')]
+        [switch]
+        $WriteToHost,
+
+        [Parameter(ParameterSetName='OptoutSwitches')]
+        [switch]
+        $NoMarkdown,
+
+        [Parameter(ParameterSetName='OptoutSwitches')]
+        [switch]
+        $NoEditor,
+
+        [Parameter(ParameterSetName='OptoutSwitches')]
+        [switch]
+        $NoMore
+    )
+
+    # Open in the browser if requested
+    if ($Online)
+    {
+        Start-Process 'https://github.com/rjmholt/SelfSignedCertificate#selfsignedcertificate'
+        return
+    }
+
+    # Otherwise download the README
+    $readmeContent = (Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/rjmholt/SelfSignedCertificate/master/README.md').Content
+
+    # If asked to pass it through as an object, comply
+    if ($PassThru)
+    {
+        return $readmeContent
+    }
+
+    # Just write out if we are asked to
+    if ($WriteToHost)
+    {
+        Write-Host $readmeContent
+    }
+
+    # See if we can just render the markdown in the terminal
+    if (-not $NoMarkdown -and (Get-Command 'ConvertFrom-Markdown' -CommandType Cmdlet -ErrorAction SilentlyContinue))
+    {
+        ConvertFrom-Markdown -InputObject $readmeContent -AsVT100EncodedString | Show-Markdown
+        return
+    }
+
+    # Try opening with less/more
+    if (-not $NoMore)
+    {
+        # On *nix use less, since less is more
+        if ($script:IsUnix -and (Get-Command 'less' -CommandType Application -ErrorAction SilentlyContinue))
+        {
+            $readmeContent | less
+            return
+        }
+
+        if (Get-Command 'more' -CommandType Application -ErrorAction SilentlyContinue)
+        {
+            $readmeContent | more.com
+            return
+        }
+    }
+
+    # Try opening in a text editor
+    if (-not $NoEditor)
+    {
+        $tmpDir = [System.IO.Path]::GetTempPath()
+        $filePath = [System.IO.Path]::Combine($tmpDir, 'SelfSignedCertificate-README.txt')
+        $readmeContent > $filePath
+
+        # Check the *nix EDITOR env var
+        if ($script:IsUnix -and $env:EDITOR)
+        {
+            & $env:EDITOR $filePath
+            return
+        }
+
+        # Invoke-Item has sane defaults for txt files
+        Invoke-Item $filePath
+        return
+    }
+
+    # Finally admit defeat in trying to make things nice
+    Write-Host $readmeContent
 }
