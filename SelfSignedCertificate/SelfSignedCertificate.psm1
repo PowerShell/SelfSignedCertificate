@@ -790,6 +790,7 @@ function Open-SelfSignedCertificateReadMe
     if ($WriteToHost)
     {
         Write-Host $readmeContent
+        return
     }
 
     # If we're already in VSCode, try that
