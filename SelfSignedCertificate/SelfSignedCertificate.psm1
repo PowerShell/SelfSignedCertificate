@@ -752,6 +752,10 @@ function Open-SelfSignedCertificateReadMe
 
         [Parameter(ParameterSetName='OptoutSwitches')]
         [switch]
+        $NoVSCode,
+
+        [Parameter(ParameterSetName='OptoutSwitches')]
+        [switch]
         $NoMarkdown,
 
         [Parameter(ParameterSetName='OptoutSwitches')]
@@ -760,11 +764,14 @@ function Open-SelfSignedCertificateReadMe
 
         [Parameter(ParameterSetName='OptoutSwitches')]
         [switch]
-        $NoMore
+        $NoMore,
+
+        [switch]
+        $NoGui
     )
 
     # Open in the browser if requested
-    if ($Online)
+    if ($Online -and -not $NoGui)
     {
         Start-Process 'https://github.com/rjmholt/SelfSignedCertificate#selfsignedcertificate'
         return
@@ -783,6 +790,32 @@ function Open-SelfSignedCertificateReadMe
     if ($WriteToHost)
     {
         Write-Host $readmeContent
+    }
+
+    # If we're already in VSCode, try that
+    if (-not $NoVSCode -and -not $NoGui -and $env:VSCODE_CWD)
+    {
+        $tmpDir = [System.IO.Path]::GetTempPath()
+        $filePath = [System.IO.Path]::Combine($tmpDir, 'SelfSignedCertificate-README.md')
+        $readmeContent > $filePath
+
+        if (Get-Command 'Open-EditorFile' -ErrorAction SilentlyContinue)
+        {
+            Open-EditorFile $filePath
+            return
+        }
+
+        if (Get-Command 'code' -CommandType Application -ErrorAction SilentlyContinue)
+        {
+            code $filePath
+            return
+        }
+
+        if (Get-Command 'code-insiders' -CommandType Application -ErrorAction SilentlyContinue)
+        {
+            code-insiders $filePath
+            return
+        }
     }
 
     # See if we can just render the markdown in the terminal
@@ -810,7 +843,7 @@ function Open-SelfSignedCertificateReadMe
     }
 
     # Try opening in a text editor
-    if (-not $NoEditor)
+    if (-not $NoEditor -and -not $NoGui)
     {
         $tmpDir = [System.IO.Path]::GetTempPath()
         $filePath = [System.IO.Path]::Combine($tmpDir, 'SelfSignedCertificate-README.txt')
