@@ -44,12 +44,13 @@ Some goals for this module include:
   - Default settings should "just work" on respective platforms
   - Favor simplicity when possible, but not as a hard requirement
 
-Other tools that exist for this include:
+### Alternative tools
+
+You may want to take a look at a few other alternatives for self-signed certificate generation,
+listed here:
 
 - Windows PowerShell's [`New-SelfSignedCertificate` cmdlet](https://docs.microsoft.com/en-us/powershell/module/pkiclient/new-selfsignedcertificate?view=win10-ps)
   from the PkiClient module.
-  This is currently incompatible with PowerShell Core, but even if it were it
-  would not function cross-platform.
   
   It can be used from PowerShell Core on Windows using the [WindowsCompatibility module](https://github.com/PowerShell/WindowsCompatibility)
   like this:
@@ -60,11 +61,16 @@ Other tools that exist for this include:
   New-SelfSignedCertificate # args as needed
   ```
   
+  However, this module is only available on Windows &mdash; there is no Linux version.
+  
 - The [`dotnet dotnet-dev-certs` global tool](https://www.nuget.org/packages/dotnet-dev-certs),
   designed for generating self-signed certificates for ASP.NET Core development.
   
+  This can be installed from the dotnet CLI.
+  
 - [`openssl`](https://www.openssl.org/), which does work cross-platform,
-  but may not be favorable compared to a PowerShell-native option.
+  but may not be favorable compared to a PowerShell-native option
+  and uses a PEM rather than PFX format.
 
 Example Usage
 ---
