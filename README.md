@@ -50,8 +50,21 @@ Other tools that exist for this include:
   from the PkiClient module.
   This is currently incompatible with PowerShell Core, but even if it were it
   would not function cross-platform.
+  
+  It can be used from PowerShell Core on Windows using the [WindowsCompatibility module](https://github.com/PowerShell/WindowsCompatibility)
+  like this:
+  
+  ```powershell
+  Install-Module WindowsCompatibility
+  Import-WinModule PKI
+  New-SelfSignedCertificate # args as needed
+  ```
+  
+- The [`dotnet dotnet-dev-certs` global tool](https://www.nuget.org/packages/dotnet-dev-certs),
+  designed for generating self-signed certificates for ASP.NET Core development.
+  
 - [`openssl`](https://www.openssl.org/), which does work cross-platform,
-  but is not favorable compared to a PowerShell-native option.
+  but may not be favorable compared to a PowerShell-native option.
 
 Example Usage
 ---
