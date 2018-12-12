@@ -829,7 +829,7 @@ function Open-SelfSignedCertificateReadMe
     if (-not $NoMore)
     {
         # On *nix use less, since less is more
-        if ($script:IsUnix -and (Get-Command 'less' -CommandType Application -ErrorAction SilentlyContinue))
+        if (Get-Command 'less' -CommandType Application -ErrorAction SilentlyContinue)
         {
             $readmeContent | less
             return
@@ -837,7 +837,7 @@ function Open-SelfSignedCertificateReadMe
 
         if (Get-Command 'more' -CommandType Application -ErrorAction SilentlyContinue)
         {
-            $readmeContent | more.com
+            $readmeContent | more
             return
         }
     }
