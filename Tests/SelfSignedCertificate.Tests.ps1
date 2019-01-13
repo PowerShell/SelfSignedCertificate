@@ -5,9 +5,9 @@ using module ..\SelfSignedCertificate
 
 function Get-MillisecondTruncatedTime
 {
-    param([datetime]$Time)
+    param([System.DateTimeOffset]$Time)
 
-    return [datetime]::new($Time.Year, $Time.Month, $Time.Day, $Time.Hour, $Time.Minute, $Time.Second, $Time.Kind)
+    return $Time.AddTicks(-$Time.Ticks % [timespan]::TicksPerSecond)
 }
 
 Describe "Generates a simple self signed certificate" {
@@ -33,7 +33,7 @@ Describe "Generates a simple self signed certificate" {
             EnhancedKeyUsage = 'ServerAuthentication','ClientAuthentication'
             ForCertificateAuthority = $true
             Passphrase = ConvertTo-SecureString -Force -AsPlainText 'password'
-            StartDate = [datetime]::Now.Subtract([timespan]::FromDays(1))
+            StartDate = [System.DateTimeOffset]::Now.Subtract([timespan]::FromDays(1))
             Duration = [timespan]::FromDays(365)
         } + $certSubject
 

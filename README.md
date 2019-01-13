@@ -118,7 +118,7 @@ full distinguished names as well as a few other options:
 }
 > $certificateParameters = $distinguishedName + @{
     OutCertPath = 'C:\Users\you\Documents\cert.pfx'
-    StartDate = [datetime]::Now
+    StartDate = [System.DateTimeOffset]::Now
     Duration = [timespan]::FromDays(365)
     Passphrase = $password
     CertificateFormat = 'Pfx' # Values from [System.Security.Cryptography.X509Certificates.X509ContentType]

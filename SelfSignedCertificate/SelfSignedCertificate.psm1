@@ -177,10 +177,10 @@ class SelfSignedCertificate
     [System.Security.Cryptography.X509Certificates.X509ContentType]$Format = $script:DefaultCertificateFormat
 
     # The start time of the certificate's valid period
-    [datetime]$NotBefore = [datetime]::Now
+    [System.DateTimeOffset]$NotBefore = [System.DateTimeOffset]::Now
 
     # The end time of the certificate's valid period
-    [datetime]$NotAfter = [datetime]::Now.AddDays($script:DefaultCertDurationDays)
+    [System.DateTimeOffset]$NotAfter = [System.DateTimeOffset]::Now.AddDays($script:DefaultCertDurationDays)
 
     # The certificate's subject and issuer name (since it's self-signed)
     [CertificateDistinguishedName]$SubjectName
@@ -440,12 +440,12 @@ function New-SelfSignedCertificate
 
         [Parameter()]
         [Alias("StartDate")]
-        [datetime]
-        $NotBefore = [datetime]::Now,
+        [System.DateTimeOffset]
+        $NotBefore = [System.DateTimeOffset]::Now,
 
         [Parameter(ParameterSetName="NotAfter")]
-        [datetime]
-        $NotAfter = [datetime]::Now.AddDays($script:DefaultCertDurationDays),
+        [System.DateTimeOffset]
+        $NotAfter = [System.DateTimeOffset]::Now.AddDays($script:DefaultCertDurationDays),
 
         [Parameter(ParameterSetName="Duration")]
         [timespan]
