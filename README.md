@@ -4,6 +4,7 @@ SelfSignedCertificate
 Table of Contents:
 
 - [Overview](#overview)
+- [Install](#install)
 - [Example Usage](#example-usage)
 - [Suggested Improvements](#suggested-improvements)
 - [License](#license)
@@ -71,6 +72,22 @@ listed here:
 - [`openssl`](https://www.openssl.org/), which does work cross-platform,
   but may not be favorable compared to a PowerShell-native option
   and uses a PEM rather than PFX format.
+
+Install
+---
+
+If Windows PowerShell's [`New-SelfSignedCertificate` cmdlet](https://docs.microsoft.com/en-us/powershell/module/pkiclient/new-selfsignedcertificate?view=win10-ps) is not imported, the following command should install without any interuption:
+
+```powershell
+Install-Module -Name SelfSignedCertificate
+```
+
+If there is an interuption during install stating, "The following commands are already available on this system:'New-SelfSignedCertificate'", most likely its from PkiClient module. One solution is to execute the `Remove-Module` command below for 'PKI' module. In an addition, if needed, after removal execute the `Import-Module` specifying a prefix to be used for all of its functions. Afterwards, execute the `Install-Module` again. For any subsequent PowerShell sessions, the following command(s) may not be needed as the `New-SelfSignedCertificate` from `SelfSignedCertificate` module should take precedence over PkiClient module.
+
+```powershell
+Remove-Module PKI
+Import-Module PKI -Prefix PKI
+```
 
 Example Usage
 ---
