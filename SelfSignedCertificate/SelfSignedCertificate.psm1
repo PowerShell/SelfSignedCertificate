@@ -17,7 +17,7 @@ $script:DefaultCertificateFormat = [System.Security.Cryptography.X509Certificate
 # Default name for the certificate file without extension
 $script:DefaultCertificateFileName = 'certificate'
 # Default key usage for certificates
-$script:DefaultKeyUsage = [System.Security.Cryptography.X509Certificates.X509KeyUsageFlags]::None
+$script:DefaultKeyUsage = [System.Security.Cryptography.X509Certificates.X509KeyUsageFlags]::KeyCertSign
 # Default certificate subject Common Name
 $script:DefaultCommonName = 'localhost'
 
